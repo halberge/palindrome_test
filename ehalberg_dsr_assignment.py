@@ -42,7 +42,7 @@ hiv_df[hiv_df['District']=='Xhariep']['NoPLHIV'].mean()
 
 #Rounded result and casted to int since we are looking at estimates of people.
 
-hiv_df['not_living_with_hiv'] = round(hiv_df['NoPLHIV']/(hiv_df['Prevalence_%']/100) - hiv_df['NoPLHIV']).astype(int)).astype(int) 
+hiv_df['not_living_with_hiv'] = round(hiv_df['NoPLHIV']/(hiv_df['Prevalence_%']/100) - hiv_df['NoPLHIV']).astype(int)
 
 ############################################################################################################
 
