@@ -46,6 +46,63 @@ hiv_df['not_living_with_hiv'] = round(hiv_df['NoPLHIV']/(hiv_df['Prevalence_%']/
 
 ############################################################################################################
 
+# Question 2c thought pattern, approach and output checking
+
+############################################################################################################
+
+#testing total calculation for first row:
+
+hiv_df.head()
+
+#NoPLHIV value for first row: 102437
+
+#Prevelance for first row: 13.6% -> converted to a fraction 0.136
+
+#Dividing NoPLHIV by fraction should return the original total, 
+
+#given the assumption that prevelance represents the percentage of overall population infected
+
+102437 / (13.6/100)
+
+#returns 753213.2352941176, if the total population was calculated correctly, 
+
+#applying the fraction again should return the NoPLHIV value:
+
+753213.2352941176*0.136
+
+#returns 102437.0, so we are confident that the total number of people in the district is 753213.2352941176 under assumptions
+
+#Next step is to subtract the actual NoPLHIV values from the calculated total
+
+(102437 / (13.6/100)) - 102437
+
+#Returns 650776.2352941176, which is the number of people not infected and value for first row
+
+#Apply logic to the entire dataframe using vectorized operations:
+
+hiv_df['not_living_with_hiv'] = round(hiv_df['NoPLHIV']/(hiv_df['Prevalence_%']/100) - hiv_df['NoPLHIV']).astype(int)
+
+#Check if results for row 1 correspond with what was found initially:
+
+hiv_df.head()
+
+#Checks out, happy with solution given assumptions, apply same check to a random row, the proverbial triple-check:
+
+#3rd row: index 2
+
+#NoPLHIV: 200751
+
+#Prevelance: 5.200000
+
+#Calculated rounded total minus infections: 3659845
+
+(200751 / (5.2/100)) - 200751
+
+#Returns 3659845.1538461535, rounded is same as what is seen in dataframe
+
+############################################################################################################
+############################################################################################################
+
 # d) What is the total NoPLHIV in all the cities (districts with the word “city” or “metro” in the name)? 
 
 hiv_df[hiv_df['District'].str.contains('Metro')]['NoPLHIV'].sum() + hiv_df[hiv_df['District'].str.contains('City')]['NoPLHIV'].sum() 
